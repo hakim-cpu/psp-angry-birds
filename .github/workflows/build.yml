@@ -16,13 +16,20 @@ jobs:
       - name: Install dependencies & PSPSDK
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake pkgconf libreadline8 libusb-dev libgpgme-dev libarchive-tools fakeroot wget
+          sudo apt-get install -y build-essential cmake pkgconf libreadline8 libusb-dev libgpgme-dev libarchive-tools fakeroot wget git
           wget https://github.com/pspdev/pspdev/releases/latest/download/pspdev-ubuntu-latest-x86_64.tar.gz
           tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz
           mkdir -p $HOME/pspdev
           mv pspdev/* $HOME/pspdev/
           echo "PSPDEV=$HOME/pspdev" >> $GITHUB_ENV
           echo "PATH=$HOME/pspdev/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Install pack-pbp manually
+        run: |
+          git clone https://github.com/pspdev/pspsdk.git
+          cd pspsdk/tools
+          make clean && make
+          cp pack-pbp/mksfo pack-pbp/pack-pbp $HOME/pspdev/bin/
 
       - name: Build PSP game
         run: |
