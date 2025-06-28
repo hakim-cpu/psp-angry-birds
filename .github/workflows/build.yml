@@ -32,3 +32,4 @@ jobs:
         with:
           name: psp-game-pbp
           path: "*.pbp"
+      
