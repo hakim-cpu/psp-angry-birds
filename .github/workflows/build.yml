@@ -1,4 +1,5 @@
-name: Build PSP Game
+- name: Build PSP game
+  run: make
 
 on:
   push:
