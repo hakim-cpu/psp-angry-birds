@@ -29,6 +29,9 @@ jobs:
           echo "Current PATH: $PATH"
           make
 
+      - name: List all files after build
+        run: find . -type f
+
       - name: Upload PBP artifact
         uses: actions/upload-artifact@v4
         with:
