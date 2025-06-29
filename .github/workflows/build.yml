@@ -18,10 +18,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake pkgconf libreadline8 libusb-dev libgpgme-dev libarchive-tools fakeroot wget git
-          wget https://github.com/pspdev/pspdev/releases/latest/download/pspdev-ubuntu-latest-x86_64.tar.gz
-          tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz
           mkdir -p $HOME/pspdev
-          mv pspdev/* $HOME/pspdev
+          wget https://github.com/pspdev/pspdev/releases/latest/download/pspdev-ubuntu-latest-x86_64.tar.gz
+          tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz -C $HOME/pspdev --strip-components=1
 
           echo "Cek isi folder bin PSPDEV"
           ls -l $HOME/pspdev/bin
@@ -32,8 +31,9 @@ jobs:
 
       - name: Build PSP Game
         env:
-          PSPDEV: $HOME/pspdev
-          PATH: $HOME/pspdev/bin:$HOME/pspdev/psp/bin:/usr/bin:/bin:${{ env.PATH }}
+          PSPDEV: ${{ env.HOME }}/pspdev
+          PSPSDK: ${{ env.HOME }}/pspdev/psp/sdk
+          PATH: ${{ env.HOME }}/pspdev/bin:${{ env.HOME }}/pspdev/psp/bin:/usr/bin:/bin:${{ env.PATH }}
         run: |
           echo "Current PATH: $PATH"
           make
