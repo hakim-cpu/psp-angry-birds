@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -21,8 +24,6 @@ jobs:
           tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz
           mkdir -p $HOME/pspdev
           mv pspdev/* $HOME/pspdev/
-          echo "PSPDEV=$HOME/pspdev" >> $GITHUB_ENV
-          echo "PATH=$HOME/pspdev/bin:$PATH" >> $GITHUB_ENV
 
       - name: Install pack-pbp manually
         run: |
@@ -36,6 +37,9 @@ jobs:
           cp mksfo $HOME/pspdev/bin/
 
       - name: Build PSP game
+        env:
+          PSPDEV: $HOME/pspdev
+          PATH: $HOME/pspdev/bin:$HOME/pspdev/psp/bin:${{ env.PATH }}
         run: |
           echo "Current PATH: $PATH"
           make
