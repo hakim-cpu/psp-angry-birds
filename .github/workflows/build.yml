@@ -23,6 +23,13 @@ jobs:
           mkdir -p $HOME/pspdev
           mv pspdev/* $HOME/pspdev
 
+          echo "Cek isi folder bin PSPDEV"
+          ls -l $HOME/pspdev/bin
+          ls -l $HOME/pspdev/psp/bin
+
+          echo "Cek apakah psp-gcc ada dan bisa dijalankan"
+          $HOME/pspdev/bin/psp-gcc --version || echo "psp-gcc tidak ditemukan!"
+
       - name: Build PSP Game
         env:
           PSPDEV: $HOME/pspdev
