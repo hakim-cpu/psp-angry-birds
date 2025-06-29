@@ -17,4 +17,22 @@ jobs:
       - name: Install dependencies & PSPSDK
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake pkgconf libreadline8 libusb-dev libgpgme-dev libarchive-tools fakeroot
+          sudo apt-get install -y build-essential cmake pkgconf libreadline8 libusb-dev libgpgme-dev libarchive-tools fakeroot wget git
+          wget https://github.com/pspdev/pspdev/releases/latest/download/pspdev-ubuntu-latest-x86_64.tar.gz
+          tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz
+          mkdir -p $HOME/pspdev
+          mv pspdev/* $HOME/pspdev
+
+      - name: Build PSP Game
+        env:
+          PSPDEV: $HOME/pspdev
+          PATH: $HOME/pspdev/bin:$HOME/pspdev/psp/bin:/usr/bin:/bin:${{ env.PATH }}
+        run: |
+          echo "Current PATH: $PATH"
+          make
+
+      - name: Upload EBOOT.PBP
+        uses: actions/upload-artifact@v4
+        with:
+          name: psp-game-pbp
+          path: "**/EBOOT.PBP"
