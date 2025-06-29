@@ -2,7 +2,9 @@ TARGET = AngryBirdsLite
 OBJS = main.o
 
 CFLAGS = -G0 -Wall -O2
-LDFLAGS = 
+LDFLAGS =
+
+PSP_FW_VERSION = 150
 
 PSP_EBOOT_TITLE = Angry Birds Lite
 PSP_EBOOT_ICON = NULL
