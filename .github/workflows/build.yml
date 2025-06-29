@@ -25,16 +25,11 @@ jobs:
           mkdir -p $HOME/pspdev
           mv pspdev/* $HOME/pspdev/
 
-      - name: Install pack-pbp manually
+      - name: Verify PSP toolchain tools
         run: |
-          git clone --depth=1 https://github.com/pspdev/psptoolchain-extra.git
-          cd psptoolchain-extra/tools/pack-pbp
-          make
-          mkdir -p $HOME/pspdev/bin
-          cp pack-pbp $HOME/pspdev/bin/
-          cd ../mksfo
-          make
-          cp mksfo $HOME/pspdev/bin/
+          export PATH=$HOME/pspdev/bin:$HOME/pspdev/psp/bin:$PATH
+          which pack-pbp || echo "pack-pbp not found"
+          which mksfo || echo "mksfo not found"
 
       - name: Build PSP game
         env:
