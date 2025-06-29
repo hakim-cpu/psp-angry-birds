@@ -22,16 +22,3 @@ jobs:
           tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz
           mkdir -p $HOME/pspdev
           mv pspdev/* $HOME/pspdev
-
-      - name: Build PSP Game
-        env:
-          PSPDEV: $HOME/pspdev
-          PATH: $HOME/pspdev/bin:$HOME/pspdev/psp/bin:${{ env.PATH }}
-        run: |
-          make
-
-      - name: Upload EBOOT.PBP
-        uses: actions/upload-artifact@v4
-        with:
-          name: psp-game-pbp
-          path: "**/EBOOT.PBP"
