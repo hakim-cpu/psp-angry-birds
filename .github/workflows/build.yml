@@ -1,12 +1,10 @@
-name: Build PSP game
+name: Build PSP Game
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build:
@@ -23,26 +21,16 @@ jobs:
           wget https://github.com/pspdev/pspdev/releases/latest/download/pspdev-ubuntu-latest-x86_64.tar.gz
           tar -xzf pspdev-ubuntu-latest-x86_64.tar.gz
           mkdir -p $HOME/pspdev
-          mv pspdev/* $HOME/pspdev/
+          mv pspdev/* $HOME/pspdev
 
-      - name: Verify PSP toolchain tools
-        run: |
-          export PATH=$HOME/pspdev/bin:$HOME/pspdev/psp/bin:$PATH
-          which pack-pbp || echo "pack-pbp not found"
-          which mksfo || echo "mksfo not found"
-
-      - name: Build PSP game
+      - name: Build PSP Game
         env:
           PSPDEV: $HOME/pspdev
           PATH: $HOME/pspdev/bin:$HOME/pspdev/psp/bin:${{ env.PATH }}
         run: |
-          echo "Current PATH: $PATH"
           make
 
-      - name: List all files after build
-        run: find . -type f
-
-      - name: Upload PBP artifact
+      - name: Upload EBOOT.PBP
         uses: actions/upload-artifact@v4
         with:
           name: psp-game-pbp
