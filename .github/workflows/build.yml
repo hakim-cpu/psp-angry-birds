@@ -26,8 +26,8 @@ jobs:
 
       - name: Install pack-pbp manually
         run: |
-          git clone --depth=1 https://github.com/pspdev/pspsdk.git
-          cd pspsdk/tools/pack-pbp
+          git clone --depth=1 https://github.com/pspdev/psptoolchain-extra.git
+          cd psptoolchain-extra/tools/pack-pbp
           make
           mkdir -p $HOME/pspdev/bin
           cp pack-pbp $HOME/pspdev/bin/
