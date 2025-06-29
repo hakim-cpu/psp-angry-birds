@@ -26,10 +26,14 @@ jobs:
 
       - name: Install pack-pbp manually
         run: |
-          git clone https://github.com/pspdev/pspsdk.git
-          cd pspsdk/tools
-          make clean && make
-          cp pack-pbp/mksfo pack-pbp/pack-pbp $HOME/pspdev/bin/
+          git clone --depth=1 https://github.com/pspdev/pspsdk.git
+          cd pspsdk/tools/pack-pbp
+          make
+          mkdir -p $HOME/pspdev/bin
+          cp pack-pbp $HOME/pspdev/bin/
+          cd ../mksfo
+          make
+          cp mksfo $HOME/pspdev/bin/
 
       - name: Build PSP game
         run: |
